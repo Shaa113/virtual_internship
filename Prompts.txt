@@ -1,0 +1,254 @@
+task 1 – Student Result Management System
+Initial Prompt
+Create a Student Result Management System using HTML, CSS, and JavaScript. The system should allow adding student records, calculating grades, displaying topper information, and searching students by roll number.
+Refined Prompt
+You are a frontend web developer so Create a Student Result Management System using HTML, CSS, and JavaScript.The application should help manage student academic records and display performance information.
+Requirements are as follows:
+Add student name, roll number, and marks.
+Calculate percentage automatically.
+Generate grades based on marks.
+Display topper information.
+Allow searching students by roll number.
+Use a clean and responsive interface.
+Include input validation.
+Add comments for important sections of code.
+Output:
+Separate HTML, CSS, and JavaScript files with explanations.
+Task 2 – Algorithm Understanding
+You are a Data Structures and Algorithms mentor helping an engineering student understand algorithms therefore generate C++ implementations for:
+Binary Search
+Merge Sort
+Dijkstra’s Algorithm
+and for each algorithm,explain the working process.
+Include comments in the code.
+Explain time and space complexity.
+Provide sample input and output.
+Keep explanations beginner friendly.
+Task 3: Prompt Engineering Challenge (10 Marks) Design prompts that generate: 1. Clean code 2. Optimized code 3. Beginner-friendly explanations 4. Production-level documentation Example Poor Prompt: Write Python code for sorting. Improved Prompt: Write an optimized Python implementation of Merge Sort with comments, edge-case handling, time complexity explanation, and test cases. Students must: ● Write 5 poor prompts ● Convert them into effective prompts ● Show output improvements
+Soln. Prompt 1
+Write sorting code.
+Improved Prompt 1
+You are a senior Python developer and you have to implement the Merge Sort algorithm. The context is that the code is intended for second-year engineering students learning Data Structures and Algorithms. The constraints are:
+- Use Python.
+- Include comments explaining each step.
+- Handle edge cases such as empty arrays and single-element arrays.
+- Follow clean coding practices.
+And output Format should strictly be:
+1. Source Code
+2. Time Complexity
+3. Space Complexity
+4. Sample Input and Output
+5. Brief Explanation
+Prompt2
+Make a calculator.
+Improved Prompt 2
+You are an experienced frontend developer and your task is to create a calculator application. The context is:
+The project will be used as a beginner web development project.
+Constraints are:
+- Use HTML, CSS, and JavaScript only.
+- Include responsive design.
+- Support basic arithmetic operations.
+- Add error handling for invalid inputs.
+- Keep the interface clean and user-friendly.
+And lastly the output Format should be:
+- HTML File
+- CSS File
+- JavaScript File
+- Feature Explanation
+Prompt 3
+Explain Binary Search.
+Improved Prompt
+Role:
+You are a university professor teaching Data Structures, explain Binary Search. The context is :
+The audience consists of first-year engineering students with basic programming knowledge.
+The Constraints are:
+•	Use simple language.
+•	Include a real-life analogy.
+•	Explain step-by-step.
+•	Include pseudocode.
+•	Explain time complexity.
+Output Format should be:
+1.	Definition
+2.	Real-Life Example
+3.	Working Steps
+4.	Pseudocode
+5.	Complexity Analysis
+Output Improvement
+The improved prompt generated a structured explanation with examples and pseudocode, making the concept easier for beginners to understand.
+Prompt 4
+Generate a README file.
+Improved Prompt
+Role:
+You are a technical documentation specialist.Create a professional README with the context:
+The project is a Student Result Management System developed using HTML, CSS, and JavaScript. The Constraints are:
+•	Use Markdown formatting.
+•	Include installation instructions.
+•	Explain project features.
+•	Include future enhancements.
+•	Keep the document professional.
+Output Format should be:
+1.	Project Overview
+2.	Features
+3.	Technologies Used
+4.	Installation Guide
+5.	Usage Instructions
+6.	Future Scope
+Output Improvement
+The improved prompt produced well-structured documentation that could be directly used in a GitHub repository.
+ Prompt 5
+Fix this code.
+Improved Prompt
+Role:
+You are a senior Python developer and debugging specialist, analyze and debug the provided code. The context is:
+The code is failing during execution and must be corrected for a university assignment.
+The Constraints are:
+•	Identify syntax errors.
+•	Identify runtime errors.
+•	Identify logical errors.
+•	Explain why each error occurs.
+•	Provide corrected code.
+Output Format should be:
+1.	Error Identification
+2.	Error Explanation
+3.	Corrected Code
+4.	Output Verification
+5.	Best Practices
+Output Improvement
+The improved prompt generated a complete debugging report with detailed explanations, corrected code, and recommendations for preventing similar issues in the future.
+Task4 Task 4 – Debugging with AI
+You are a senior Python developer and debugging specialist, analyze the provided buggy Python code and the requirements are
+Identify syntax errors.
+Identify runtime errors.
+Identify logical errors.
+Explain why each error occurs.
+Generate corrected code.
+Explain each fix made.
+Include manual observations and improvements.
+Output should be:
+A structured debugging report suitable for academic submission.
+for report:
+You are a senior Python developer, debugging specialist, and technical report writer.
+Task:
+Analyze the provided buggy Python code, identify all errors, debug it, and generate a professional assignment report.
+Context:
+This task is part of a university assignment on AI-assisted debugging. The objective is to demonstrate manual error identification, AI-assisted debugging, and code correction while explaining the debugging process in a structured manner.
+Buggy Code:
+numbers = [1,2,3,4,5]
+sum = 0
+for i in range(0, len(numbers)+1):
+sum += numbers[i]
+print("Average:", sum/0)
+Constraints:
+Explain each error clearly.
+Use beginner-friendly language.
+Separate syntax, runtime, and logical errors.
+Explain why each error occurs.
+
+Show how AI helped identify and fix the problems.
+
+Include manual improvements beyond AI suggestions.
+
+Keep the report professional and submission-ready.
+
+
+Output Format:
+Task 4 – Debugging with AI
+1. Original Buggy Code
+2. Manual Error Identification
+Error 1
+Description
+Error 2
+Description
+Error 3
+Description
+3. Syntax Errors
+Explain any syntax or indentation-related issues.
+4. Runtime Errors
+IndexError
+Explain:
+Why len(numbers)+1 causes an IndexError
+Which index becomes invalid
+What happens during execution
+ZeroDivisionError
+Explain:
+Why dividing by zero is invalid
+What exception Python raises
+5. Logical Errors
+Explain:
+Why the average calculation is incorrect
+What the correct formula should be
+6. AI-Assisted Debugging Process
+Prompt Used
+AI Suggestions
+Improvements Recommended
+7. Corrected Python Code
+Provide a fully corrected version of the code.
+8. Explanation of Each Fix
+For every correction:
+Original code
+Corrected code
+Reason for change
+9. Final Output
+Show the expected program output.
+10. Manual Improvements Made
+Examples:
+Better variable naming
+Improved readability
+Added comments
+Enhanced code quality
+11. Learning Outcome
+Brief reflection on what was learned from the debugging activity.
+Task 5 – Code Optimization Challenge
+You are a software engineer specializing in performance optimization.analyze the given code examples and suggest improvements.In this focus on:
+Nested Loop Optimization
+Memory Optimization
+Recursion Optimization
+Database Query Optimization
+For each example:
+Explain the original problem.
+Identify performance bottlenecks.
+Suggest AI-based optimizations.
+Show optimized code.
+Compare complexity before and after optimization.
+Mention manual improvements performed after reviewing the AI output.
+Task 6 – NotebookLM Research Activity
+You are an experienced research professor helping a third-year engineering student understand a research paper,analyze the uploaded paper and convert it into structured study material and generate:
+Executive Summary
+Key Concepts
+Frequently Asked Questions
+Study Notes
+Real-World Applications
+Critical Analysis
+Exam Preparation Questions
+Reflection and Insights
+Quick Revision Sheet
+Use simple language while maintaining technical accuracy.
+Task 7 – AI Documentation Assistant
+You are a technical documentation specialist therefore generate complete documentation for a Student Result Management System developed using HTML, CSS, and JavaScript.
+Create:
+README Documentation
+API Documentation
+User Manual
+Inline Comments Examples
+Human vs AI Documentation Comparison
+The documentation should be professional, beginner friendly, and suitable for academic submission.
+task 8
+Act as a project planning assistant for my programming assignment.
+I need to complete the mini project using AI tools and document the full workflow.
+First, recommend the best mini project option from these choices:
+Smart Attendance System
+AI-Based Resume Analyzer
+Personal Finance Tracker
+Code Plagiarism Checker
+Chatbot for College FAQ
+Choose the best project and complete it as if you are a student building it with AI assistance. Generate the architecture, project structure, feature list, implementation plan, source code, debugging process, optimization suggestions, documentation, and final reflection. Show both the AI-generated output and the manual improvements made at each stage so the complete AI-assisted workflow can be documented for submission. Present the result in a table with columns: Stage, Deliverable, AI Contribution, Manual Improvement, and Purpose.
+
+
+
+
+
+
+
+
+
+
