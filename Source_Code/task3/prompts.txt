@@ -1,0 +1,110 @@
+Task 3: Prompt Engineering Challenge (10 Marks) Design prompts that generate: 1. Clean code 2. Optimized code 3. Beginner-friendly explanations 4. Production-level documentation Example Poor Prompt: Write Python code for sorting. Improved Prompt: Write an optimized Python implementation of Merge Sort with comments, edge-case handling, time complexity explanation, and test cases. Students must: ● Write 5 poor prompts ● Convert them into effective prompts ● Show output improvements
+Soln. Prompt 1
+Write sorting code.
+Improved Prompt 1
+You are a senior Python developer and you have to implement the Merge Sort algorithm. The context is that the code is intended for second-year engineering students learning Data Structures and Algorithms. The constraints are:
+- Use Python.
+- Include comments explaining each step.
+- Handle edge cases such as empty arrays and single-element arrays.
+- Follow clean coding practices.
+And output Format should strictly be:
+1. Source Code
+2. Time Complexity
+3. Space Complexity
+4. Sample Input and Output
+5. Brief Explanation
+Prompt2
+Make a calculator.
+Improved Prompt 2
+You are an experienced frontend developer and your task is to create a calculator application. The context is:
+The project will be used as a beginner web development project.
+Constraints are:
+- Use HTML, CSS, and JavaScript only.
+- Include responsive design.
+- Support basic arithmetic operations.
+- Add error handling for invalid inputs.
+- Keep the interface clean and user-friendly.
+And lastly the output Format should be:
+- HTML File
+- CSS File
+- JavaScript File
+- Feature Explanation
+Prompt 3
+Explain Binary Search.
+Improved Prompt
+Role:
+You are a university professor teaching Data Structures, explain Binary Search. The context is :
+The audience consists of first-year engineering students with basic programming knowledge.
+The Constraints are:
+•	Use simple language.
+•	Include a real-life analogy.
+•	Explain step-by-step.
+•	Include pseudocode.
+•	Explain time complexity.
+Output Format should be:
+1.	Definition
+2.	Real-Life Example
+3.	Working Steps
+4.	Pseudocode
+5.	Complexity Analysis
+Output Improvement
+The improved prompt generated a structured explanation with examples and pseudocode, making the concept easier for beginners to understand.
+Prompt 4
+Generate a README file.
+Improved Prompt
+Role:
+You are a technical documentation specialist.Create a professional README with the context:
+The project is a Student Result Management System developed using HTML, CSS, and JavaScript. The Constraints are:
+•	Use Markdown formatting.
+•	Include installation instructions.
+•	Explain project features.
+•	Include future enhancements.
+•	Keep the document professional.
+Output Format should be:
+1.	Project Overview
+2.	Features
+3.	Technologies Used
+4.	Installation Guide
+5.	Usage Instructions
+6.	Future Scope
+Output Improvement
+The improved prompt produced well-structured documentation that could be directly used in a GitHub repository.
+ Prompt 5
+Fix this code.
+Improved Prompt
+Role:
+You are a senior Python developer and debugging specialist, analyze and debug the provided code. The context is:
+The code is failing during execution and must be corrected for a university assignment.
+The Constraints are:
+•	Identify syntax errors.
+•	Identify runtime errors.
+•	Identify logical errors.
+•	Explain why each error occurs.
+•	Provide corrected code.
+Output Format should be:
+1.	Error Identification
+2.	Error Explanation
+3.	Corrected Code
+4.	Output Verification
+5.	Best Practices
+Output Improvement
+The improved prompt generated a complete debugging report with detailed explanations, corrected code, and recommendations for preventing similar issues in the future.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

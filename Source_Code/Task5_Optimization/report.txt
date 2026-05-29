@@ -1,0 +1,95 @@
+Technical Optimisation Report: AI-Assisted Code Refactoring
+
+This report provides a detailed analysis and refactoring of common programming patterns that frequently lead to performance degradation. As a senior engineer, I have applied AI-assisted algorithmic suggestions alongside manual refinements to improve execution time, memory footprint, and overall code maintainability.
+
+
+--------------------------------------------------------------------------------
+
+
+1. Nested Loop Optimisation
+
+* Problem Description: A common scenario involves identifying common elements between two large datasets, such as matching unique user identifiers from two different production environments. A naive approach compares every element of the first list against every element of the second list, leading to severe performance bottlenecks as data scales.
+* Original Code:
+* Issues in the Original Code:
+  * Quadratic Time Complexity: The nested loop structure results in O(N \times M) complexity, where N and M are the lengths of the two lists.
+  * Redundant Comparisons: For every element in user_ids_alpha, the engine performs a linear scan of user_ids_beta, even if the element has already been matched or doesn't exist.
+* Optimised Code:
+* Time Complexity Before Optimisation: O(N^2) (assuming N \approx M).
+* Time Complexity After Optimisation: O(N + M).
+* Space Complexity Before Optimisation: O(1) (excluding the output list).
+* Space Complexity After Optimisation: O(M), where M is the number of elements stored in the hash set set_beta.
+* AI Suggestions Used: Algorithmic shift from nested iteration to a hash-based lookup strategy to achieve linear time complexity.
+* Manual Improvements Made: Updated variable names from generic list_a/b to context-specific user_ids_alpha/beta to improve maintainability and adherence to senior coding standards.
+* Key Learning Outcome: Utilising hash-based data structures like sets can transform quadratic time complexity into linear time complexity by enabling near-instantaneous look-ups.
+
+
+--------------------------------------------------------------------------------
+
+
+2. Memory Optimisation
+
+* Problem Description: Processing massive datasets, such as multi-gigabyte telemetry logs, can exhaust system RAM if the entire file is loaded into memory simultaneously, leading to MemoryError or system thrashing.
+* Original Code:
+* Issues in the Original Code:
+  * Memory Exhaustion: f.readlines() creates a full list of strings in memory. If the file size exceeds available RAM, the process crashes.
+  * Inefficient Buffering: Loading the entire file is unnecessary for sequential, line-by-line processing.
+* Optimised Code:
+* Time Complexity Before Optimisation: O(N).
+* Time Complexity After Optimisation: O(N).
+* Space Complexity Before Optimisation: O(N), where N is the total size of the file.
+* Space Complexity After Optimisation: O(1) relative to file size (constant buffer size).
+* AI Suggestions Used: Recommendation to use generators and file-iterator objects to implement stream processing.
+* Manual Improvements Made: Applied data type narrowing principles by suggesting float32 over float64 for numerical log data to halve memory consumption per entry. Extracted processing logic into process_line to improve modularity.
+* Key Learning Outcome: Lazy evaluation and stream processing are vital for scalability, allowing applications to process datasets far larger than the physical memory available.
+
+
+--------------------------------------------------------------------------------
+
+
+3. Recursion Optimisation
+
+* Problem Description: Recursive algorithms, such as those calculating the Fibonacci sequence, often suffer from "overlapping subproblems" where the same values are recalculated thousands of times across the call tree.
+* Original Code:
+* Issues in the Original Code:
+  * Exponential Growth: The call tree grows at a rate of O(2^N), making the function effectively hang for values of N > 40.
+  * Stack Depth: Each call consumes stack space, risking a RecursionError.
+* Optimised Code:
+* Time Complexity Before Optimisation: O(2^N).
+* Time Complexity After Optimisation: O(N).
+* Space Complexity Before Optimisation: O(N) (maximum stack depth).
+* Space Complexity After Optimisation: O(N) (stack depth plus the cache for N values).
+* AI Suggestions Used: Suggested using the functools.lru_cache decorator to implement memoization without restructuring the core logic.
+* Manual Improvements Made: Integrated input validation for negative integers and manually configured sys.setrecursionlimit to ensure stability for larger inputs.
+* Key Learning Outcome: Preserving computation state via memoization prevents redundant work and collapses exponential time complexity into linear time.
+
+
+--------------------------------------------------------------------------------
+
+
+4. Database Query Logic Optimisation (Simulation)
+
+* Problem Description: The "N+1" query problem occurs when an application fetches a list of records and then executes a separate query for every record to retrieve related data, causing significant I/O overhead.
+* Original Code:
+* Issues in the Original Code:
+  * Network Latency: N+1 round-trips to the database create a massive bottleneck.
+  * Over-fetching: SELECT * retrieves every column (e.g., descriptions, blobs), most of which are unused.
+* Optimised Code:
+* Time Complexity Before Optimisation: O(N) database round-trips.
+* Time Complexity After Optimisation: O(1) database round-trip relative to the number of parent records.
+* Space Complexity Before Optimisation: O(R \times C_{all}) where C_{all} is every column in the schema.
+* Space Complexity After Optimisation: O(R \times C_{selected}) where only required columns are stored in application memory.
+* AI Suggestions Used: Recommended batching queries and utilizing relational JOIN operations to move data-stitching logic to the database engine.
+* Manual Improvements Made: Implemented selective column fetching to reduce the network payload and added logic to filter at the source rather than the application layer.
+* Key Learning Outcome: Reducing I/O overhead by batching requests and fetching only required data is critical for maintaining low-latency applications and database health.
+
+
+--------------------------------------------------------------------------------
+
+
+5. Performance Comparison Summary
+
+Optimisation Topic	Original Complexity (Time/Space)	Optimised Complexity (Time/Space)	Primary Benefit
+Nested Loop	Time: O(N^2) / Space: O(1)	Time: O(N+M) / Space: O(M)	Dramatic reduction in execution time via hash-set lookups.
+Memory	Time: O(N) / Space: O(N)	Time: O(N) / Space: O(1)	Prevents system crashes and allows processing of infinite data streams.
+Recursion	Time: O(2^N) / Space: O(N)	Time: O(N) / Space: O(N)	Eliminates redundant calculations; solves exponential growth issues.
+Database Query	Time: O(N) queries / Space: O(R \times C_{all})	Time: O(1) query / Space: O(R \times C_{selected})	Minimises network latency and reduces I/O and memory bottlenecks.

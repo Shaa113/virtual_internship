@@ -1,0 +1,12 @@
+ Study Notes
+Definitions:
+Feature Map: The output generated after a convolution kernel scans the input
+.
+Optimizer: The algorithm (like Adam or SGD) that adjusts the network's weights to minimize error
+.
+Advantages: Automatic feature extraction (no manual work needed) and translation invariance (recognising a cat anywhere in the frame)
+.
+Limitations: High computational cost and poor generalization to small image transformations like rotation
+.
+Future Scope: NAS (Network Architecture Search), which uses AI to design even better AI models
+.

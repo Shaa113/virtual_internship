@@ -1,0 +1,52 @@
+# Student Result Management System – User Manual
+
+## Introduction
+This web application lets you keep track of students' marks, calculate their grades, and see who performed best. All data is stored in your browser, so nothing is saved on a server.
+
+## Features
+- **Add Student** – Enter a new student's details and marks.
+- **Search Student** – Find a student by roll number.
+- **View Topper** – See the highest‑scoring student automatically.
+- **Delete Record** – Remove a student from the list.
+- **Export CSV** – Download the current list as a CSV file (optional).
+
+## Getting Started
+1. Open the folder `Source_Code/Task1_StudentResult`.
+2. Double‑click `index.html` (or open it in any modern browser).
+3. The application loads instantly – no installation required.
+
+## Adding a Student
+1. Fill in the **Student Name** field.
+2. Enter the **Roll Number** (must be unique).
+3. Type the marks for each subject (0‑20). The form validates the values.
+4. Click **Add Student**.
+5. A small toast will confirm that the student was added and the table updates.
+
+## Searching for a Student
+1. Type the roll number into the **Search** box at the top.
+2. Press **Enter** or click the magnifying‑glass icon.
+3. The table shows only the matching record. Clear the box to view all students again.
+
+## Viewing the Topper
+- The **Topper** card on the dashboard always shows the student with the highest overall percentage. No extra action is needed; it updates automatically whenever the data changes.
+
+## Deleting a Record
+1. Locate the student you want to remove in the table.
+2. Click the **Delete** (trash) button on that row.
+3. A confirmation toast appears and the record disappears from the list.
+
+## Exporting Data (Optional)
+1. Click the **Export CSV** button.
+2. The browser downloads a file `students_export.csv` containing all currently displayed records.
+
+## Tips for First‑Time Users
+- Make sure each roll number is unique; duplicates will be rejected.
+- All marks must be between 0 and 20; the form will show an error otherwise.
+- Refresh the page to clear all data (since it is stored only in the browser).
+
+## Troubleshooting
+- **No data appears** – Ensure you opened `index.html` from the correct folder.
+- **Error messages** – Follow the toast notification; it tells you which field is wrong.
+- **Exported CSV is empty** – Check that at least one student has been added before exporting.
+
+Enjoy managing student results!

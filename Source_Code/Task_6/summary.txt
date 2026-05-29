@@ -1,0 +1,23 @@
+Research Objective: To provide a comprehensive overview of CNN history, architectures, functional components (activation/loss/optimizers), and future trends
+.
+Problem Addressed: Previous reviews often focused only on specific applications; this paper aims to provide a general perspective on CNN evolution and "rules of thumb" for network design
+.
+Methodology: The authors perform a qualitative survey of the most influential models (from 1998 to 2020) and conduct experimental evaluations of various functions on standard datasets like MNIST and CIFAR-10
+.
+Key Findings: Deeper and wider networks generally perform better, but they require specific innovations like Residual connections to handle training issues
+. For mobile devices, optimizing Memory Access Cost (MAC) is as important as reducing total calculations
+.
+Conclusion: CNNs remain the state-of-the-art for visual data. Future progress lies in automated architecture search (NAS), improved security against adversarial attacks, and more efficient model compression
+
+2. Key Concepts
+Local Connections: Unlike standard neural networks where every neuron connects to everything, CNN neurons only look at a small "local" patch of pixels. This speeds up learning
+.
+Weight Sharing: The same "filter" is used across the entire image. This drastically reduces the number of parameters the computer has to learn
+.
+Down-sampling (Pooling): Reducing the resolution of feature maps to remove redundant information and prevent the model from "overfitting" (memorising specific training examples)
+.
+Receptive Field: The total area of the original input image that a specific neuron can "see"
+.
+Gradient Vanishing: A common problem in deep networks where the signal used to train the model becomes so small it effectively disappears; solved by functions like ReLU or architectures like ResNet
+.
+Source is NotebookLM

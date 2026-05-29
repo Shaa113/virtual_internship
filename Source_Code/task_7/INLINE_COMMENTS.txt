@@ -1,0 +1,88 @@
+# Inline Comments & Code Documentation Standards
+
+## Purpose
+- **Improve readability**: Future maintainers should quickly understand *why* code exists, not just *what* it does.
+- **Facilitate onboarding**: Junior developers can grasp complex logic without digging through the entire codebase.
+- **Enable tooling**: Consistent JSDoc allows IDEs to provide autocomplete, type‑hints, and generates API docs.
+
+## General Principles
+1. **Clarity over brevity** – write comments that explain intent, edge‑cases, and assumptions.
+2. **Avoid obvious statements** – don’t comment `i++` as "increment i".
+3. **Keep comments up‑to‑date** – outdated comments are worse than none.
+4. **Prefer self‑describing code** – use expressive variable/function names; complement with comments when the reasoning is non‑trivial.
+5. **Use proper grammar and punctuation** – makes docs more professional.
+
+## Comment Types
+### 1. File Header
+```javascript
+/**
+ * @file  app.js
+ * @brief Core Application Script for Student Result Analytics Dashboard
+ * @author  Your Name <you@example.com>
+ * @date    2026‑05‑29
+ * @description
+ *   This file powers the interactive UI that lets users upload, view,
+ *   filter, sort, and export student exam data.
+ */
+```
+
+### 2. Section Headers
+- Separate logical blocks (e.g., data loading, UI wiring, rendering) with a clear comment block.
+```javascript
+/* ------------------------------------------------------------------
+ *  CSV handling – read client‑side file, parse, and populate the DB.
+ * ------------------------------------------------------------------ */
+```
+
+### 3. JSDoc for Functions
+```javascript
+/**
+ * Convert raw CSV rows into a normalized student record.
+ * @param {Object} raw - Raw fields from CSV (strings).
+ * @returns {Object} Normalized student object with calculated fields.
+ */
+function processRecord(raw) { … }
+```
+- Document **parameters**, **return values**, **throws**, and **example usage** when helpful.
+
+### 4. Inline Comments (within function bodies)
+- Explain *why* a particular algorithm/branch is chosen.
+- Highlight non‑obvious edge‑case handling.
+```javascript
+// Guard against duplicate roll numbers before insertion.
+if (studentDb.some(s => s.roll_no === roll)) {
+    showToast(`Warning: Roll Number '${roll}' already exists.`, "warning");
+    return;
+}
+```
+- Use a single line‑comment (`//`) for short notes; multi‑line (`/* … */`) only when a block explanation is needed.
+
+### 5. TODO / FIXME / NOTE Tags
+- Use standard tags to surface work‑in‑progress items.
+```javascript
+// TODO: Replace linear search with a Map for O(1) look‑ups.
+// FIXME: Handle CSV fields containing commas inside quotes.
+// NOTE: Current grade thresholds follow the university policy (see docs/grades.md).
+```
+
+## Formatting Conventions
+- **Indentation**: 2 spaces (consistent with the project’s style).
+- **Line length**: ≤ 120 characters.
+- **Capitalisation**: First word capitalised, sentence‑style.
+- **Punctuation**: End comments with a period when they form a full sentence.
+- **Avoid trailing whitespace**.
+
+## Documentation Tools
+- **JSDoc**: Run `npm run docs` (or equivalent) to generate HTML API docs from JSDoc comments.
+- **ESLint**: Enforce comment rules via `eslint-plugin-jsdoc`.
+- **Prettier**: Auto‑format comment blocks with the same config as code.
+
+## Review Checklist
+- [ ] Every public function has a JSDoc block.
+- [ ] All non‑trivial logic sections have explanatory comments.
+- [ ] No comment states the obvious implementation detail.
+- [ ] TODO/FIXME/NOTE tags are tracked in the issue tracker.
+- [ ] File header present at the top of each source file.
+
+---
+*These standards should be applied to all JavaScript files in the Student Result Management System project.*

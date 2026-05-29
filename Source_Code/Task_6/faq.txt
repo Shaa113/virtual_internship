@@ -1,0 +1,31 @@
+Frequently Asked Questions (15)
+What was the first 1D-CNN? The Time Delay Neural Network (TDNN) proposed in 1987 for speech recognition
+.
+Why is LeNet-5 considered a "masterpiece"? It was the first to combine local fields, shared weights, and sub-sampling for digit recognition
+.
+What was the "AlexNet" breakthrough? In 2012, it proved that deep CNNs could dominate image classification by using GPUs, ReLU, and Dropout
+.
+How does "Padding" help? It adds zero-value pixels to the border of an image to prevent it from shrinking too much during convolution
+.
+What is the benefit of a 3x3 kernel over a 5x5? It uses fewer parameters (45% reduction) while maintaining the same receptive field and adding more non-linearity
+.
+What is an Inception module? A structure that uses different sizes of kernels (1x1, 3x3, 5x5) simultaneously to capture features at different scales
+.
+Why is 1x1 convolution useful? It is used to reduce the number of "channels" (dimensionality), which lowers computational costs
+.
+What makes ResNet special? It uses "shortcut connections" to allow gradients to flow directly through the network, enabling models with hundreds of layers
+.
+What are "MobileNets"? Lightweight CNNs designed for phones that use "depth-wise separable convolutions" to save battery and processing power
+.
+What is "Channel Shuffle"? A technique in ShuffleNet that allows information to flow between different groups of convolutions
+.
+ReLU vs. Sigmoid: Which is better? ReLU is generally better for hidden layers because it converges faster and doesn't suffer from gradient vanishing as easily
+.
+When should I use Cross Entropy loss? It is the most popular choice for classification tasks, especially with a Softmax layer
+.
+What is "Network Pruning"? Deleting non-essential connections in a trained network to make the file size smaller for mobile apps
+.
+What is an "Adversarial Attack"? Adding tiny, invisible noise to an image that causes a CNN to misclassify it (e.g., seeing a panda as a gibbon)
+.
+What are Capsule Networks? A newer architecture that tries to preserve the spatial relationship between parts of an object (like eyes and noses)
+.

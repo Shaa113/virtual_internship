@@ -1,0 +1,189 @@
+# API Documentation – Student Result Management System
+
+## Overview
+This document describes the public JavaScript API exposed by the **Student Result Management System**. The UI is a single‑page web app; the functions below are the primary entry points used by the UI layer to manipulate student data, perform calculations, and render results.
+
+---
+
+### 1. `addStudent(formData)`
+**Purpose**: Adds a new student record to the in‑memory data store and updates the UI.
+
+**Signature**
+```js
+/**
+ * Adds a new student to the system.
+ * @param {Object} formData - Object containing the raw values from the Add‑Student form.
+ *   Expected keys: roll_no, name, school, sex, age, studytime,
+ *   absences, G1, G2, G3.
+ * @returns {void}
+ */
+function addStudent(formData) { … }
+```
+
+**Parameters**
+| Name | Type | Description |
+|------|------|-------------|
+| `formData` | `Object` | Raw field values collected from the form. All numeric fields are strings that will be parsed inside the function. |
+
+**Return Value**
+- `void` – The function updates the global `studentDb` array and triggers UI refresh via `applyFilters()`. It also displays a toast notification.
+
+**Behaviour**
+1. Validates required fields (`roll_no`, `name`).
+2. Checks that the roll number is unique.
+3. Ensures each grade (`G1`, `G2`, `G3`) is within the 0‑20 range.
+4. Normalises the record via `processRecord()` (calculates total, percentage, grade).
+5. Pushes the new object into `studentDb`.
+6. Calls `applyFilters()` to re‑render the table, statistics and topper.
+7. Shows a success toast and resets the form.
+
+---
+
+### 2. `deleteStudent(rollNo)`
+**Purpose**: Removes a student identified by roll number from the data store and updates the UI.
+
+**Signature**
+```js
+/**
+ * Deletes a student record.
+ * @param {string} rollNo - The unique roll number of the student to delete.
+ * @returns {void}
+ */
+function deleteStudent(rollNo) { … }
+```
+
+**Parameters**
+| Name | Type | Description |
+|------|------|-------------|
+| `rollNo` | `string` | Unique identifier of the student to be removed. |
+
+**Return Value**
+- `void` – After removal, the UI is refreshed and a toast is shown.
+
+**Behaviour**
+1. Finds the index of the matching record in `studentDb`.
+2. If found, removes it via `Array.splice`.
+3. Calls `applyFilters()` to refresh the table and KPI panels.
+4. Shows an informational toast with the deleted student's name.
+
+---
+
+### 3. `searchStudent(query, gradeFilter, minPct)`
+**Purpose**: Retrieves a subset of students matching the provided search criteria.
+
+**Signature**
+```js
+/**
+ * Searches the student database.
+ * @param {string} query - Text entered in the search box (matched against roll_no and name, case‑insensitive).
+ * @param {string} gradeFilter - Grade selector value (e.g., "A", "B", "ALL").
+ * @param {number} minPct - Minimum percentage (from the slider) a student must meet.
+ * @returns {Array<Object>} Array of student objects that satisfy all filters.
+ */
+function searchStudent(query, gradeFilter, minPct) { … }
+```
+
+**Parameters**
+| Name | Type | Description |
+|------|------|-------------|
+| `query` | `string` | Free‑text search term. |
+| `gradeFilter` | `string` | Selected grade or "ALL" to ignore grade filtering. |
+| `minPct` | `number` | Minimum allowed percentage (0‑100). |
+
+**Return Value**
+- `Array<Object>` – List of student records that match all three criteria.
+
+**Behaviour**
+1. Normalises the search string to lower case.
+2. Filters `studentDb` where the roll number **or** name includes the query.
+3. Applies the grade filter unless the value is "ALL".
+4. Applies the percentage threshold.
+5. Returns the filtered array, which is later passed to `renderTable()` and `calculateStatistics()`.
+
+---
+
+### 4. `calculateGrade(percentage)`
+**Purpose**: Converts a numeric percentage into a letter grade according to the institution’s grading policy.
+
+**Signature**
+```js
+/**
+ * Maps a numeric percentage to a letter grade.
+ * @param {number} percentage - Value between 0 and 100.
+ * @returns {string} One‑character grade: "A", "B", "C", "D" or "F".
+ */
+function calculateGrade(percentage) { … }
+```
+
+**Parameters**
+| Name | Type | Description |
+|------|------|-------------|
+| `percentage` | `number` | Student's overall percentage (0‑100). |
+
+**Return Value**
+- `string` – Letter grade.
+
+**Behaviour**
+- `≥ 85` → "A"
+- `70‑84` → "B"
+- `55‑69` → "C"
+- `40‑54` → "D"
+- `< 40` → "F"
+
+The function is used inside `processRecord()` to populate the `grade` field for each student.
+
+---
+
+### 5. `displayTopper(activeList)`
+**Purpose**: Determines the student with the highest overall percentage among the currently filtered list and updates the KPI “Topper” UI elements.
+
+**Signature**
+```js
+/**
+ * Shows the top‑scoring student.
+ * @param {Array<Object>} activeList - The list of students currently displayed after filtering.
+ * @returns {void}
+ */
+function displayTopper(activeList) { … }
+```
+
+**Parameters**
+| Name | Type | Description |
+|------|------|-------------|
+| `activeList` | `Array<Object>` | Filtered student objects (usually the same array passed to `calculateStatistics`). |
+
+**Return Value**
+- `void` – The function mutates the DOM directly.
+
+**Behaviour**
+1. Iterates over `activeList` to find the record with the greatest `percentage`.
+2. Updates `kpiTopperName.textContent` with the student’s name.
+3. Updates `kpiTopperScore.textContent` with the formatted percentage and roll number.
+4. If the list is empty, clears the fields and displays “N/A”.
+
+---
+
+## Usage Example
+```js
+// Adding a new student from form data
+addStudent({
+  roll_no: "111",
+  name: "Sam Example",
+  school: "GP",
+  sex: "M",
+  age: "17",
+  studytime: "2",
+  absences: "5",
+  G1: "13",
+  G2: "14",
+  G3: "15"
+});
+
+// Searching for all A‑grade students with >= 90% score
+const results = searchStudent('', 'A', 90);
+console.log('Top A‑students:', results);
+```
+
+---
+
+*All function names above correspond to the implementations in `Source_Code/Task1_StudentResult/app.js`. Adjust the signatures if the actual function names differ (e.g., `handleAddStudent` ↔ `addStudent`).*

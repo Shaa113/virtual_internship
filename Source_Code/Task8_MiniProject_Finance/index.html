@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Tracker & Spending Dashboard</title>
+    <!-- Premium Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Main Application Header -->
+        <header class="dashboard-header animate-fade-in">
+            <div class="header-content">
+                <span class="badge">Task 8: Personal Finance Analytics</span>
+                <h1>Personal Finance Tracker</h1>
+                <p class="subtitle">Interactive financial analysis, budgeting, and threshold alert visualization engine</p>
+            </div>
+            <div class="header-actions">
+                <div class="file-upload-wrapper">
+                    <label for="csvImportInput" class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Import CSV
+                    </label>
+                    <input type="file" id="csvImportInput" accept=".csv" style="display: none;">
+                </div>
+                <button id="btnExportLedger" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Export Ledger
+                </button>
+            </div>
+        </header>
+
+        <!-- Dynamic Financial Summaries -->
+        <section class="kpi-grid animate-slide-up" style="animation-delay: 0.1s;">
+            <div class="kpi-card glass">
+                <div class="kpi-header">
+                    <h3>Total Expenses</h3>
+                    <div class="icon-wrapper bg-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/><line x1="12" y1="6" x2="12" y2="14"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value" id="kpiTotalExpenses">Rs 0.00</div>
+                <div class="kpi-footer text-muted">Cumulative overall spending</div>
+            </div>
+
+            <div class="kpi-card glass">
+                <div class="kpi-header">
+                    <h3>Monthly Allocated Budget</h3>
+                    <div class="icon-wrapper bg-purple">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value" id="kpiTotalBudget">Rs 0.00</div>
+                <div class="kpi-footer text-muted">Sum of category targets</div>
+            </div>
+
+            <div class="kpi-card glass">
+                <div class="kpi-header">
+                    <h3>Net Budget Margin</h3>
+                    <div class="icon-wrapper bg-cyan">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value" id="kpiNetMargin">Rs 0.00</div>
+                <div class="kpi-footer text-muted">Remaining disposable funds</div>
+            </div>
+
+            <div class="kpi-card glass highlight-card" id="alertSummaryCard">
+                <div class="kpi-header">
+                    <h3>System Alert Status</h3>
+                    <div class="icon-wrapper bg-green" id="kpiAlertIconWrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                </div>
+                <div class="kpi-value" id="kpiAlertStatus" style="font-size: 1.50rem; line-height: 1.25;">Safe</div>
+                <div class="kpi-footer" id="kpiAlertFooter" style="color: rgba(255, 255, 255, 0.75);">All categories under budget limits</div>
+            </div>
+        </section>
+
+        <!-- Main Workspace Area -->
+        <main class="dashboard-main animate-slide-up" style="animation-delay: 0.2s;">
+            <!-- Left Column: Inputs & Custom Settings -->
+            <div class="left-panel">
+                <!-- Log Expense Form Card -->
+                <div class="card glass">
+                    <div class="card-header">
+                        <h2>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                            Log New Expense
+                        </h2>
+                        <span class="card-action-hint">Triggers threshold checking algorithm</span>
+                    </div>
+                    <form id="expenseForm" class="form-grid">
+                        <div class="form-group col-12">
+                            <label for="selectCategory">Budget Category</label>
+                            <select id="selectCategory" required>
+                                <option value="Food">Food</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="inputAmount">Amount (Rs)</label>
+                            <input type="number" id="inputAmount" placeholder="e.g. 2500" min="0.01" step="0.01" required>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="inputDate">Expense Date</label>
+                            <input type="date" id="inputDate" required>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="inputDescription">Description / Notes</label>
+                            <input type="text" id="inputDescription" placeholder="e.g. Groceries and dairy products" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary col-12">Save Expense Entry</button>
+                    </form>
+                </div>
+
+                <!-- Budget Limits Config Card -->
+                <div class="card glass">
+                    <div class="card-header">
+                        <h2>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            Configure Budget Limits
+                        </h2>
+                    </div>
+                    <form id="budgetConfigForm" class="form-grid">
+                        <div class="form-group col-12">
+                            <label for="selectConfigCat">Category</label>
+                            <select id="selectConfigCat" required>
+                                <option value="Food">Food</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="inputConfigLimit">New Monthly Limit (Rs)</label>
+                            <input type="number" id="inputConfigLimit" min="0" step="100" placeholder="e.g. 5000" required>
+                        </div>
+                        <button type="submit" class="btn btn-secondary col-12">Apply Budget Change</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column: Visual Progress & Data Table Ledger -->
+            <div class="right-panel">
+                <div class="card glass" style="margin-bottom: 1.5rem;">
+                    <div class="card-header">
+                        <h2>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                            Budget Consumption Dashboard
+                        </h2>
+                    </div>
+                    <!-- Dynamic Bars Container -->
+                    <div class="category-dashboard-container" id="categoryDashboard">
+                        <!-- Instantiated by JS dynamically -->
+                    </div>
+                </div>
+
+                <div class="card glass data-card">
+                    <div class="card-header flex-header">
+                        <div class="title-group">
+                            <h2>Transaction Ledger History</h2>
+                            <p class="subtitle" id="ledgerCountText">Showing 0 of 0 transactions</p>
+                        </div>
+                        <div class="filter-dropdown" style="flex: 0 1 180px;">
+                            <select id="ledgerCategoryFilter">
+                                <option value="ALL">All Categories</option>
+                                <option value="Food">Food Only</option>
+                                <option value="Entertainment">Entertainment Only</option>
+                                <option value="Bills">Bills Only</option>
+                                <option value="Transport">Transport Only</option>
+                                <option value="Other">Other Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Ledger Table -->
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Description / Notes</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ledgerTableBody">
+                                <tr>
+                                    <td colspan="5" class="td-empty text-muted">No transactions logged. Use the expense form to log your expenses.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Alert Toast Overlay -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

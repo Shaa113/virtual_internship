@@ -1,0 +1,179 @@
+Algorithm 1: Binary Search
+The "divide and conquer" paradigm is essential for optimizing search operations within large, ordered datasets. Within the hierarchy of search techniques, Binary Search stands as the gold standard for efficiency, providing a massive performance leap over linear approaches by systematically halving the search space. Its primary function is to locate the position of a target value within a sorted array; the fundamental prerequisite is that the data must be pre-sorted, as the "divide and conquer" logic relies on the mathematical certainty of element ordering.
+#include <iostream>
+#include <vector>
+#include <cstddef>
+
+/**
+ * Performs a Binary Search on a sorted integer vector.
+ * @param arr The sorted vector to search through.
+ * @param target The value to find.
+ * @return The index of the target, or -1 if not found.
+ */
+long long binarySearch(const std::vector<int>& arr, int target) {
+    if (arr.empty()) return -1;
+
+    std::size_t low = 0;
+    std::size_t high = arr.size() - 1;
+
+    while (low <= high) {
+        // Optimization: Prevent potential integer overflow
+        // Using size_t for indices to handle large-scale data structures
+        std::size_t mid = low + (high - low) / 2;
+
+        if (arr[mid] == target) {
+            return static_cast<long long>(mid); // Target found
+        } else if (arr[mid] < target) {
+            low = mid + 1; // Search the right half
+        } else {
+            if (mid == 0) break; // Prevent underflow of size_t
+            high = mid - 1; // Search the left half
+        }
+    }
+    return -1; // Target not present
+}
+Binary Search operates by repeatedly dividing the search interval in half. Beginning with the entire array, the algorithm compares the target value to the middle element. If they match, the search is complete. If the target is smaller than the middle element, the search continues in the lower half; if larger, it continues in the upper half. This iterative reduction continues until the value is found or the interval is empty.
+Time Complexity: O(logn) (Best: O(1), Average/Worst: O(logn))
+Space Complexity: O(1)
+Impact Analysis: The O(logn) time complexity is transformative. In a dataset of one billion elements, a linear search might take one billion comparisons, whereas Binary Search requires at most thirty. This logarithmic efficiency is what enables modern databases to handle massive queries instantaneously.
+During the synthesis process, the AI suggested using const std::vector<int>& to pass the data by reference, avoiding unnecessary memory copies. However, manual review was critical in identifying a significant logic flaw: the AI initially provided the naive midpoint calculation (low + high) / 2. This was manually corrected to low + (high - low) / 2 to prevent integer overflow. Furthermore, the index type was updated to std::size_t to align with professional standards for memory-safe indexing. While Binary Search provides exceptional retrieval speed, its prerequisite of sorted data necessitates efficient organization techniques, leading us to the analysis of Merge Sort.
+Algorithm 2: Merge Sort
+Stable sorting algorithms are vital in data processing where the relative order of equal elements must be preserved. Merge Sort represents a critical balance in software architecture, offering guaranteed performance at the cost of additional memory overhead—a trade-off that is often necessary for large-scale systems. Beyond standard sorting, Merge Sort serves as the foundation for External Sorting, a technique essential for processing datasets that exceed a system's physical RAM by sorting data in chunks and merging them from disk.
+Merge Sort is a stable, comparison-based sorting algorithm that uses a "split-sort-merge" logic. It recursively divides the array into sub-arrays until each contains only one element, then merges them back together in the correct order.
+#include <vector>
+#include <cstddef>
+
+void merge(std::vector<int>& arr, std::size_t left, std::size_t mid, std::size_t right) {
+    std::size_t n1 = mid - left + 1;
+    std::size_t n2 = right - mid;
+
+    std::vector<int> L(n1), R(n2);
+
+    for (std::size_t i = 0; i < n1; i++) L[i] = arr[left + i];
+    for (std::size_t j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
+
+    std::size_t i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) arr[k++] = L[i++];
+        else arr[k++] = R[j++];
+    }
+
+    while (i < n1) arr[k++] = L[i++];
+    while (j < n2) arr[k++] = R[j++];
+}
+
+void mergeSort(std::vector<int>& arr, std::size_t left, std::size_t right) {
+    if (left >= right) return;
+
+    std::size_t mid = left + (right - left) / 2;
+    mergeSort(arr, left, mid);
+    mergeSort(arr, mid + 1, right);
+    merge(arr, left, mid, right);
+}
+Time Complexity: O(nlogn) (Best, Average, and Worst are all O(nlogn))
+Space Complexity: O(n)
+Impact Analysis: Merge Sort provides consistent O(nlogn) performance regardless of the initial data order. The O(n) space requirement makes it less suitable for memory-constrained environments like embedded sensors, but its stability and predictable performance make it the standard choice for linked lists and massive external datasets where QuickSort’s worst-case O(n 
+2
+ ) behavior is unacceptable.
+AI-assisted refinements included optimizations for handling recursion base cases and suggestions for memory management. Manual observations highlighted that while the algorithm is highly performant, its recursive overhead and space complexity must be weighed against the performance gains for smaller datasets where an O(n 
+2
+ ) In-Place sort might actually be faster due to cache locality. Moving beyond the organization of linear data, we now address the more complex challenge of finding optimal paths within interconnected networks.
+Algorithm 3: Dijkstra's Algorithm
+Pathfinding is a fundamental challenge in network routing, logistics, and Geographic Information Systems (GIS). Dijkstra’s Algorithm serves as the strategic foundation for these applications, identifying the single-source shortest path in weighted environments. Academically, the algorithm is classified as "greedy" because it always expands the node with the current minimum known distance; this property guarantees optimality provided all edge weights are non-negative.
+#include <vector>
+#include <queue>
+#include <climits>
+#include <cassert>
+
+struct Edge {
+    std::size_t to;
+    int weight;
+};
+
+typedef std::pair<int, std::size_t> pii;
+
+/**
+ * Computes shortest paths from a starting node.
+ * @return A vector of distances from start to all other vertices.
+ */
+std::vector<int> dijkstra(std::size_t start, const std::vector<std::vector<Edge>>& adj, std::size_t V) {
+    std::priority_queue<pii, std::vector<pii>, std::greater<pii>> pq;
+    std::vector<int> dist(V, INT_MAX);
+
+    dist[start] = 0;
+    pq.push({0, start});
+
+    while (!pq.empty()) {
+        int d = pq.top().first;
+        std::size_t u = pq.top().second;
+        pq.pop();
+
+        if (d > dist[u]) continue;
+
+        for (const auto& edge : adj[u]) {
+            // Lead Engineer Requirement: Explicit check for non-negative weights
+            assert(edge.weight >= 0 && "Dijkstra requires non-negative edge weights");
+            
+            if (dist[u] + edge.weight < dist[v]) {
+                dist[v] = dist[u] + edge.weight;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+    return dist;
+}
+Dijkstra’s maintains a list of the shortest known distances to all nodes. At each iteration, it selects the unvisited node with the smallest distance estimate, explores its neighbors, and updates their distances if a shorter path is discovered.
+Time Complexity: O((V+E)logV) using an adjacency list and a priority queue.
+Space Complexity: O(V+E)
+Impact Analysis: Performance is heavily dictated by graph density. In sparse graphs, such as road networks, this algorithm is incredibly efficient. Because the greedy choice remains consistent across cases in this implementation, the Best, Average, and Worst-case time complexities are generally expressed by the same asymptotic bound.
+The AI was instrumental in structuring the graph representation, specifically recommending adjacency lists over matrices to save space in sparse networks. Manual oversight was required to transition the function from a simple console output utility to a professional return-type signature and to implement the assert safeguard for edge weights. Having analyzed each algorithm individually, we can now synthesize these findings into a structured quantitative comparison.
+Complexity Comparison Table
+While individual analysis reveals the strengths of each algorithm, a side-by-side comparison highlights the specific scenarios where each excels.
+Algorithm
+Time (Best)
+Time (Avg)
+Time (Worst)
+Space
+Binary Search
+O(1)
+O(logn)
+O(logn)
+O(1)
+Merge Sort
+O(nlogn)
+O(nlogn)
+O(nlogn)
+O(n)
+Dijkstra’s
+O((V+E)logV)
+O((V+E)logV)
+O((V+E)logV)
+O(V+E)
+These complexities dictate selection in real-world architecture. Merge Sort is chosen for its guaranteed performance in critical systems, whereas Binary Search’s minimal overhead makes it the preferred utility for memory-limited lookups. Technical metrics provide the "what," but evaluating the tools that generated these insights provides the "how" of modern development.
+AI Tool Comparison: ChatGPT vs. Gemini
+Evaluating the reliability and "hallucination" potential of Large Language Models (LLMs) is a strategic necessity for modern engineers. Blind reliance on AI can lead to subtle logical errors that bypass traditional compilers.
+ChatGPT
+Code Quality: High; demonstrated proficiency in modern C++ features, such as using auto for iterator declarations and std::priority_queue with proper STL wrappers.
+Readability: Excellent; utilized clear block structuring and professional variable naming.
+Explanation Quality: Deeply conceptual; provided accurate reasoning for the greedy choice property in Dijkstra’s.
+Optimization Suggestions: Sophisticated, though it notably failed to identify the integer overflow risk in Binary Search without explicit prompting.
+Gemini
+Code Quality: Functional but occasionally favored "classic" C-style patterns (e.g., manual pointer-like arithmetic) rather than modern C++ abstractions.
+Readability: Clear and concise, though the comments were sparse and lacked academic depth.
+Explanation Quality: Accurate but brief; focused primarily on the "how" rather than the theoretical "why."
+Optimization Suggestions: Effective for memory management, though less proactive in identifying edge-case logical constraints like weight negativity.
+The comparison of these tools leads to the final synthesis of human-led verification and modifications.
+Manual Analysis
+The "Human-in-the-loop" requirement remains the final safeguard in AI-assisted development. Automated tools can provide structure, but manual verification ensures correctness and academic rigor. In this exercise, ChatGPT produced superior code with better adherence to modern C++ safety standards, while Gemini provided significant pedagogical value through its concise, "skimmable" breakdowns.
+Modification Log:
+Midpoint Calculation: Both AIs initially provided (low + high) / 2 for Binary Search; this was manually corrected to low + (high - low) / 2 to ensure robustness against overflow.
+Data Types: Standardized all index variables to std::size_t to prevent signed/unsigned comparison warnings and support large address spaces.
+Dijkstra Return & Safety: Redesigned the Dijkstra implementation to return a std::vector<int> for modularity and added an assert check for non-negative edge weights to prevent logical failure.
+These refinements underscore the learning journey, which concludes with a reflection on the process itself.
+Learning Outcome
+The integration of AI into the study of algorithms has fundamentally altered the learning process. Rather than focusing solely on syntax, the engineer is empowered to focus on architectural patterns and complexity trade-offs.
+Key Takeaways:
+Algorithmic Logic: Deepened understanding of "divide and conquer" and "greedy" strategies as universal problem-solving templates.
+Complexity Nuance: Learned that time complexity is not the only metric; space constraints, stability, and data location (RAM vs. Disk) often dictate the "real-world" best choice.
+Critical Thinking: AI is an accelerator, not a replacement. The ability to audit AI-generated code is now as essential as the ability to write it from scratch.
+This activity has demonstrated that the synergy between human expertise and AI assistance creates a more robust development workflow. By critically evaluating automated outputs, we are better prepared for the complex, high-stakes challenges of modern software engineering.
